@@ -36,3 +36,64 @@
     transform: rotate(360deg);
   }
 }
+
+.map{
+  float: left;
+  position:absolute;
+  top:0;
+  bottom:0;
+  width:100%;
+  height: 100%;
+}
+
+.cont{
+  height: 100vh;
+  width: 100vw;
+  /* position: relative; */
+}
+
+
+
+.cards{ 
+  /* display: "block"; */
+  float: left;
+  /* position: fixed; */
+  z-index: 999;
+  /* padding-top: 50px; */
+  left: 75%;
+  /* right: 0px; */
+  top: 10px;
+  width: 24%;
+  /* height: 400px; */
+  /* overflow: auto; */
+  /* float: right; */
+  /* position: absolute; */
+  /* width: 18rem; */
+  /* top: 0px; */
+  /* bottom: 0px; */
+  /* right: 100px; */
+  /* z-index: 999;   */
+}
+.search{ 
+  /* display: "block"; */
+  float: left;
+  /* position: fixed; */
+  z-index: 999;
+  /* padding-top: 50px; */
+  left: -18%;
+  /* right: 0px; */
+  top: 10px;
+  width: auto;
+  /* height: 400px; */
+  /* overflow: auto; */
+  /* float: right; */
+  /* position: absolute; */
+  /* width: 18rem; */
+  /* top: 0px; */
+  /* bottom: 0px; */
+  /* right: 100px; */
+  /* z-index: 999;   */
+}
+@card-body{
+  padding: 0px;
+}
