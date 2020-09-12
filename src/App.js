@@ -114,13 +114,6 @@ class App extends Component {
             zoomOffset={-1}
 
           />
-          {<Marker 
-          icon={myIcon}
-          position={position}>
-            <Popup>
-              {this.state.result.country_ptbr}
-            </Popup>
-          </Marker>}
           {this.state.countrys.map((country) => (
             <Marker 
             key={country.id}
