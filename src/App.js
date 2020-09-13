@@ -61,6 +61,8 @@ class App extends Component {
   }
 
 
+  
+
   state = {
     lat: -21.1767,
     lng: -47.8208,
@@ -70,7 +72,19 @@ class App extends Component {
     countryName: '',
     alert: false,
     alert2: false,
+    viewport: {
+      center: [49.32707, 19.10041],
+      zoom: 5,
+      }
   }
+
+  getMapZoom() {
+    return this.map && this.map.leafletElement.getZoom();
+ }
+
+  handleZoomstart = (map) => {
+    console.log(this.map && this.map.leafletElement);
+  };
 
   formSubmited = (event) => {
     event.preventDefault();
@@ -82,7 +96,21 @@ class App extends Component {
       [event.target.name]: event.target.value
     })
   }
+
+  onViewportChanged = (viewport) => {
+    this.setState({
+      zoom: viewport.zoom
+    })
+    console.log(viewport.zoom);
+    };
   render(){
+    const handlePopupOpen = (e) => {
+      this.getCountry(e.popup.options.children)
+      console.log(e.popup.options.children)
+      // console.log("Popup is closed")
+    }
+
+
     (function(){
     var originalInitTile = L.GridLayer.prototype._initTile
     L.GridLayer.include({
@@ -101,7 +129,7 @@ class App extends Component {
     
     return (
       <div className="cont">
-        <Map className="map" center={position} zoom={this.state.zoom}>
+        <Map className="map" center={position} zoom={this.state.zoom} viewport={this.state.viewport} onViewportChanged={this.onViewportChanged} onpopupopen={handlePopupOpen}>
           <TileLayer
             attribution={'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
                 '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
@@ -125,19 +153,9 @@ class App extends Component {
             </Marker>
           ))}
         </Map>
-        <Card className='cards text-white bg-dark mb-3'>
-          <Card.Header>{this.state.result.country_ptbr}</Card.Header>
-          <Card.Body>
-            <Card.Title>Casos: {this.state.result.cases}</Card.Title>
-            <Card.Text>
-              Confirmados: {this.state.result.confirmed}<br/>
-              Mortes: {this.state.result.deaths}<br/>
-              Recuperados: {this.state.result.recovered}<br/>
-            </Card.Text>
-          </Card.Body>
-        </Card>
-        <Card  className='search text-white bg-dark mb-3'>
-          <Card.Body className="cbody p-1 align-middle">
+      
+        <Card  className='search text-white bg-dark mb-3 float-left'>
+          <Card.Body className="p-1 align-middle">
             <Form inline onSubmit={this.formSubmited}>
               <Form.Label className="my-1 mr-2" htmlFor="inlineFormCustomSelectPref">
                 País
@@ -161,7 +179,17 @@ class App extends Component {
             : null }
           </Card.Body>
         </Card>
-
+        <Card className='cards text-white bg-dark mb-3 float-right'>
+          <Card.Header>{this.state.result.country_ptbr}</Card.Header>
+          <Card.Body>
+            <Card.Title>Casos: {this.state.result.cases}</Card.Title>
+            <Card.Text>
+              Confirmados: {this.state.result.confirmed}<br/>
+              Mortes: {this.state.result.deaths}<br/>
+              Recuperados: {this.state.result.recovered}<br/>
+            </Card.Text>
+          </Card.Body>
+        </Card>
     </div>
     );
   }
